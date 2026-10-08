@@ -104,66 +104,118 @@
     }
   }
 
-  // Servicios: acordeón con imagen que cambia según la categoría
-  const accordion = document.querySelector('[data-accordion]');
-  const visual = document.querySelector('[data-svc-visual]');
-  if (accordion) {
-    const triggers = Array.from(accordion.querySelectorAll('[data-svc]'));
+  // Servicios: tarjetas deslizables
+  const track = document.querySelector('[data-svc-track]');
+  if (track) {
+    const cards = Array.from(track.querySelectorAll('[data-svc-card]'));
+    const prevBtn = document.querySelector('[data-svc-prev]');
+    const nextBtn = document.querySelector('[data-svc-next]');
+    const bars = Array.from(document.querySelectorAll('[data-svc-progress] span'));
+    const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)');
+    const behavior = () => (motionOK.matches ? 'smooth' : 'auto');
 
-    const showImage = (key) => {
-      visual?.querySelectorAll('[data-svc-img]').forEach((img) => {
-        img.classList.toggle('is-active', img.dataset.svcImg === key);
-      });
+    // posición de scroll en la que cada tarjeta queda alineada al inicio
+    const stops = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      return cards.map((card) => Math.min(card.offsetLeft - cards[0].offsetLeft, max));
+    };
+    const nearestIndex = (list, x) => list.reduce((best, value, i) => (Math.abs(value - x) < Math.abs(list[best] - x) ? i : best), 0);
+    const scrollToCard = (index) => track.scrollTo({ left: stops()[index], behavior: behavior() });
+
+    const go = (direction) => {
+      const list = stops();
+      const x = track.scrollLeft;
+      const target = direction > 0 ? list.find((v) => v > x + 2) : list.slice().reverse().find((v) => v < x - 2);
+      if (target !== undefined) track.scrollTo({ left: target, behavior: behavior() });
+    };
+    prevBtn?.addEventListener('click', () => go(-1));
+    nextBtn?.addEventListener('click', () => go(1));
+
+    // panel de servicios de cada tarjeta
+    const setCard = (card, open, { focus = true } = {}) => {
+      if (card.classList.contains('is-open') === open) return;
+      const openBtn = card.querySelector('[data-card-open]');
+      card.classList.toggle('is-open', open);
+      openBtn.setAttribute('aria-expanded', String(open));
+      if (focus) (open ? card.querySelector('[data-card-close]') : openBtn).focus({ preventScroll: true });
     };
 
-    const openKey = () => triggers.find((t) => t.getAttribute('aria-expanded') === 'true')?.dataset.svc;
+    // qué tarjetas se ven: indicador, flechas y cierre automático al deslizar
+    const ratios = new Map();
+    const seen = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        ratios.set(entry.target, entry.intersectionRatio);
+        if (entry.intersectionRatio < 0.2) setCard(entry.target, false, { focus: false });
+      });
+      cards.forEach((card, i) => bars[i]?.classList.toggle('is-on', (ratios.get(card) || 0) >= 0.6));
+      if (prevBtn) prevBtn.disabled = (ratios.get(cards[0]) || 0) >= 0.98;
+      if (nextBtn) nextBtn.disabled = (ratios.get(cards[cards.length - 1]) || 0) >= 0.98;
+    }, { root: track, threshold: [0, 0.2, 0.6, 0.98] });
+    cards.forEach((card) => seen.observe(card));
 
-    const setOpen = (trigger, open) => {
-      const panel = document.getElementById(trigger.getAttribute('aria-controls'));
-      trigger.setAttribute('aria-expanded', String(open));
-      panel.hidden = !open;
-      panel.classList.remove('is-entering');
-      if (open) {
-        void panel.offsetWidth; // reinicia la animación de entrada
-        panel.classList.add('is-entering');
+    cards.forEach((card, index) => {
+      card.querySelector('[data-card-open]')?.addEventListener('click', () => {
+        cards.forEach((other) => { if (other !== card) setCard(other, false, { focus: false }); });
+        setCard(card, true);
+        // si la tarjeta está cortada en el borde, la trae completa
+        if ((ratios.get(card) || 0) < 0.98) scrollToCard(index);
+      });
+      card.querySelector('[data-card-close]')?.addEventListener('click', () => setCard(card, false));
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && card.classList.contains('is-open')) setCard(card, false);
+      });
+    });
+
+    // arrastre con mouse en escritorio (en táctil y trackpad el desplazamiento ya es nativo)
+    let drag = null;
+    let dragged = false;
+    const release = () => track.classList.remove('is-dragging');
+
+    track.addEventListener('pointerdown', (event) => {
+      dragged = false;
+      if (event.pointerType !== 'mouse' || event.button !== 0) return;
+      if (event.target.closest('.svc-card.is-open')) return; // dentro del panel se puede seleccionar texto
+      drag = { x: event.clientX, left: track.scrollLeft, id: event.pointerId, moved: false };
+    });
+    track.addEventListener('pointermove', (event) => {
+      if (!drag) return;
+      const dx = event.clientX - drag.x;
+      if (!drag.moved) {
+        if (Math.abs(dx) < 6) return;
+        drag.moved = true;
+        track.setPointerCapture(drag.id);
+        track.classList.add('is-dragging');
       }
+      track.scrollLeft = drag.left - dx;
+    });
+    const endDrag = () => {
+      if (!drag) return;
+      const { moved, left } = drag;
+      drag = null;
+      if (!moved) return;
+      dragged = true;
+      // suelta en la tarjeta más cercana; un arrastre largo avanza al menos una
+      const list = stops();
+      const x = track.scrollLeft;
+      const from = nearestIndex(list, left);
+      let to = nearestIndex(list, x);
+      if (to === from && Math.abs(x - left) > 60) to = Math.min(cards.length - 1, Math.max(0, from + Math.sign(x - left)));
+      if (Math.abs(list[to] - x) < 1) { release(); return; }
+      track.scrollTo({ left: list[to], behavior: behavior() });
+      if ('onscrollend' in window) track.addEventListener('scrollend', release, { once: true });
+      else window.setTimeout(release, 650);
     };
-
-    triggers.forEach((trigger) => {
-      trigger.addEventListener('click', () => {
-        const willOpen = trigger.getAttribute('aria-expanded') !== 'true';
-        triggers.forEach((other) => { if (other !== trigger) setOpen(other, false); });
-        setOpen(trigger, willOpen);
-        if (willOpen) {
-          showImage(trigger.dataset.svc);
-          // en móvil, alinea la categoría abierta bajo el encabezado
-          if (window.matchMedia('(max-width: 900px)').matches) {
-            trigger.closest('.svc').scrollIntoView({ block: 'start', behavior: 'smooth' });
-          }
-        }
-      });
-
-      // vista previa de la imagen al pasar el cursor (solo escritorio)
-      trigger.addEventListener('pointerenter', (event) => {
-        if (event.pointerType === 'mouse') showImage(trigger.dataset.svc);
-      });
-    });
-
-    accordion.addEventListener('pointerleave', () => {
-      const key = openKey();
-      if (key) showImage(key);
-    });
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    track.addEventListener('lostpointercapture', endDrag);
+    // un arrastre no cuenta como clic sobre la tarjeta
+    track.addEventListener('click', (event) => {
+      if (!dragged) return;
+      dragged = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
   }
-
-  // Cinta de servicios: pausa manual
-  const marquee = document.querySelector('[data-marquee]');
-  const marqueeToggle = document.querySelector('[data-marquee-toggle]');
-  marqueeToggle?.addEventListener('click', () => {
-    const paused = marquee.classList.toggle('is-paused');
-    marqueeToggle.setAttribute('aria-pressed', String(paused));
-    marqueeToggle.querySelector('i').className = paused ? 'ph-light ph-play' : 'ph-light ph-pause';
-    marqueeToggle.querySelector('.sr-only').textContent = paused ? 'Reanudar animación' : 'Pausar animación';
-  });
 
   // Aparición de secciones al hacer scroll
   const revealed = document.querySelectorAll('[data-reveal]');

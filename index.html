@@ -160,154 +160,190 @@
         </ul>
       </div>
     </div>
-    <button class="marquee__toggle" type="button" aria-pressed="false" data-marquee-toggle>
-      <i class="ph-light ph-pause" aria-hidden="true"></i>
-      <span class="sr-only">Pausar animación</span>
-    </button>
   </div>
 
-  <!-- SERVICIOS -->
+  <!-- SERVICIOS: tarjetas deslizables. Al tocar una tarjeta sube el panel con su lista. -->
   <section class="section services" id="servicios">
     <div class="container">
       <header class="services__head" data-reveal>
         <h2 class="display-2">Todo para consentirte, en un solo <em>lugar</em></h2>
         <p class="lead">Elige una categoría y descubre lo que podemos hacer por ti.</p>
       </header>
+    </div>
 
-      <div class="services__grid">
-        <div class="svc-list" data-accordion>
-
-          <div class="svc" data-reveal style="--d:0">
-            <h3 class="svc__head">
-              <button class="svc__trigger" type="button" id="svc-cabello-btn" aria-expanded="true" aria-controls="svc-cabello" data-svc="cabello">
-                <span class="svc__name">Cabello</span>
-                <span class="svc__hint">Cortes, color, tratamientos y extensiones</span>
-                <span class="svc__icon" aria-hidden="true"><i class="ph-light ph-plus"></i></span>
-              </button>
-            </h3>
-            <div class="svc__panel" id="svc-cabello" role="region" aria-labelledby="svc-cabello-btn">
-              <img class="svc__img-mobile" src="assets/img/servicio-cabello.jpg" width="1120" height="1400" loading="lazy" alt="Cabello largo castaño con balayage y ondas suaves">
-              <p class="svc__intro">Cortes, color y tratamientos para un cabello sano, brillante y con estilo.</p>
-              <ul class="svc__items">
-                <li><span class="svc__item-name">Corte de dama</span><span class="svc__item-note">Con lavado y peinado</span></li>
-                <li><span class="svc__item-name">Corte de caballero</span></li>
-                <li><span class="svc__item-name">Peinados</span><span class="svc__item-note">Lacio u ondulado</span></li>
-                <li><span class="svc__item-name">Coloración</span><span class="svc__item-note">Color, balayage y mechas</span></li>
-                <li><span class="svc__item-name">Tratamientos capilares</span><span class="svc__item-note">Hidratación, nutrición y reparación</span></li>
-                <li><span class="svc__item-name">Extensiones</span><span class="svc__item-note">Fibra colombiana o cabello 100% humano</span></li>
-              </ul>
-              <a class="btn btn--gold" href="#contacto" data-wa="Hola, quiero agendar un servicio de cabello en MC Studio &amp; Spa.">
-                <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
-                <span>Agendar cita</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="svc" data-reveal style="--d:1">
-            <h3 class="svc__head">
-              <button class="svc__trigger" type="button" id="svc-unas-btn" aria-expanded="false" aria-controls="svc-unas" data-svc="unas">
-                <span class="svc__name">Uñas</span>
-                <span class="svc__hint">Manicure, pedicure, gelish y acrílicas</span>
-                <span class="svc__icon" aria-hidden="true"><i class="ph-light ph-plus"></i></span>
-              </button>
-            </h3>
-            <div class="svc__panel" id="svc-unas" role="region" aria-labelledby="svc-unas-btn" hidden>
-              <img class="svc__img-mobile" src="assets/img/servicio-unas.jpg" width="1120" height="1400" loading="lazy" alt="Manos con manicure en tono nude sobre una mesa de mármol">
-              <p class="svc__intro">Manos y pies cuidados al detalle. Todos los servicios de uñas incluyen exfoliación de manos.</p>
-              <ul class="svc__items">
-                <li><span class="svc__item-name">Uñas acrílicas</span><span class="svc__item-note">Largo y diseño a tu gusto</span></li>
-                <li><span class="svc__item-name">Soft gel</span><span class="svc__item-note">Ligeras y naturales</span></li>
-                <li><span class="svc__item-name">Gelish</span><span class="svc__item-note">Color semipermanente</span></li>
-                <li><span class="svc__item-name">Manicure spa</span><span class="svc__item-note">Limpieza, cutícula e hidratación</span></li>
-                <li><span class="svc__item-name">Pedicure spa</span><span class="svc__item-note">Con exfoliación y masaje relajante</span></li>
-                <li><span class="svc__item-name">Pedicure con gelish</span></li>
-              </ul>
-              <a class="btn btn--gold" href="#contacto" data-wa="Hola, quiero agendar un servicio de uñas en MC Studio &amp; Spa.">
-                <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
-                <span>Agendar cita</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="svc" data-reveal style="--d:2">
-            <h3 class="svc__head">
-              <button class="svc__trigger" type="button" id="svc-pestanas-btn" aria-expanded="false" aria-controls="svc-pestanas" data-svc="pestanas">
-                <span class="svc__name">Pestañas y cejas</span>
-                <span class="svc__hint">Rizado de pestaña y planchado de ceja</span>
-                <span class="svc__icon" aria-hidden="true"><i class="ph-light ph-plus"></i></span>
-              </button>
-            </h3>
-            <div class="svc__panel" id="svc-pestanas" role="region" aria-labelledby="svc-pestanas-btn" hidden>
-              <img class="svc__img-mobile" src="assets/img/servicio-pestanas.jpg" width="1120" height="1400" loading="lazy" alt="Primer plano de un ojo cerrado con pestañas largas y rizadas">
-              <p class="svc__intro">Servicios para realzar tu mirada de forma natural.</p>
-              <ul class="svc__items">
-                <li><span class="svc__item-name">Pestañas</span><span class="svc__item-note"><span class="ph">[Tipos de servicio por confirmar]</span></span></li>
-                <li><span class="svc__item-name">Rizado de pestaña</span></li>
-                <li><span class="svc__item-name">Cejas</span><span class="svc__item-note"><span class="ph">[Tipos de servicio por confirmar]</span></span></li>
-                <li><span class="svc__item-name">Planchado de ceja</span></li>
-              </ul>
-              <a class="btn btn--gold" href="#contacto" data-wa="Hola, quiero agendar un servicio de pestañas o cejas en MC Studio &amp; Spa.">
-                <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
-                <span>Agendar cita</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="svc" data-reveal style="--d:3">
-            <h3 class="svc__head">
-              <button class="svc__trigger" type="button" id="svc-spa-btn" aria-expanded="false" aria-controls="svc-spa" data-svc="spa">
-                <span class="svc__name">Spa y masajes</span>
-                <span class="svc__hint">Un momento para desconectarte</span>
-                <span class="svc__icon" aria-hidden="true"><i class="ph-light ph-plus"></i></span>
-              </button>
-            </h3>
-            <div class="svc__panel" id="svc-spa" role="region" aria-labelledby="svc-spa-btn" hidden>
-              <img class="svc__img-mobile" src="assets/img/servicio-spa.jpg" width="1120" height="1400" loading="lazy" alt="Manos de terapeuta con aceite junto a toallas y piedras calientes">
-              <p class="svc__intro">Un momento para desconectarte y relajar el cuerpo.</p>
-              <ul class="svc__items">
-                <li><span class="svc__item-name">Masajes</span><span class="svc__item-note"><span class="ph">[Tipos de masaje por confirmar]</span></span></li>
-                <li><span class="svc__item-name">Spa</span><span class="svc__item-note"><span class="ph">[Servicios de spa por confirmar]</span></span></li>
-                <li><span class="svc__item-name">Pedicure spa</span><span class="svc__item-note">Con exfoliación y masaje relajante</span></li>
-              </ul>
-              <a class="btn btn--gold" href="#contacto" data-wa="Hola, quiero agendar un masaje o servicio de spa en MC Studio &amp; Spa.">
-                <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
-                <span>Agendar cita</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="svc" data-reveal style="--d:4">
-            <h3 class="svc__head">
-              <button class="svc__trigger" type="button" id="svc-faciales-btn" aria-expanded="false" aria-controls="svc-faciales" data-svc="faciales">
-                <span class="svc__name">Faciales y más</span>
-                <span class="svc__hint">Hydrofacial y servicios personalizados</span>
-                <span class="svc__icon" aria-hidden="true"><i class="ph-light ph-plus"></i></span>
-              </button>
-            </h3>
-            <div class="svc__panel" id="svc-faciales" role="region" aria-labelledby="svc-faciales-btn" hidden>
-              <img class="svc__img-mobile" src="assets/img/servicio-faciales.jpg" width="1120" height="1400" loading="lazy" alt="Mujer con los ojos cerrados durante un tratamiento facial">
-              <p class="svc__intro">Tratamientos para una piel más limpia, suave y luminosa, y servicios a tu medida.</p>
-              <ul class="svc__items">
-                <li><span class="svc__item-name">Hydrofacial</span><span class="svc__item-note">Limpieza profunda que renueva e hidrata</span></li>
-                <li><span class="svc__item-name">Tratamientos faciales</span><span class="svc__item-note"><span class="ph">[Opciones por confirmar]</span></span></li>
-                <li><span class="svc__item-name">Servicios personalizados</span><span class="svc__item-note">Cuéntanos qué buscas</span></li>
-              </ul>
-              <a class="btn btn--gold" href="#contacto" data-wa="Hola, quiero información sobre faciales en MC Studio &amp; Spa.">
-                <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
-                <span>Agendar cita</span>
-              </a>
-            </div>
-          </div>
-
+    <ul class="svc-track" id="svc-track" aria-label="Categorías de servicios" data-svc-track data-reveal>
+      <li class="svc-card" style="--d:0" data-svc-card>
+        <img class="svc-card__img" src="assets/img/servicio-cabello.jpg" width="1120" height="1400" loading="lazy" decoding="async" draggable="false" alt="Cabello largo castaño con balayage y ondas suaves">
+        <div class="svc-card__front">
+          <h3 class="svc-card__name">Cabello</h3>
+          <p class="svc-card__hint">Cortes, color, tratamientos y extensiones</p>
+          <button class="svc-card__open" type="button" aria-expanded="false" aria-controls="svc-cabello" data-card-open>
+            <span>Ver servicios<span class="sr-only"> de cabello</span></span>
+            <i class="ph-light ph-plus" aria-hidden="true"></i>
+          </button>
         </div>
-
-        <div class="svc-visual" aria-hidden="true" data-svc-visual>
-          <img src="assets/img/servicio-cabello.jpg" width="1120" height="1400" alt="" data-svc-img="cabello" class="is-active">
-          <img src="assets/img/servicio-unas.jpg" width="1120" height="1400" alt="" data-svc-img="unas" loading="lazy">
-          <img src="assets/img/servicio-pestanas.jpg" width="1120" height="1400" alt="" data-svc-img="pestanas" loading="lazy">
-          <img src="assets/img/servicio-spa.jpg" width="1120" height="1400" alt="" data-svc-img="spa" loading="lazy">
-          <img src="assets/img/servicio-faciales.jpg" width="1120" height="1400" alt="" data-svc-img="faciales" loading="lazy">
+        <div class="svc-card__sheet" id="svc-cabello" role="region" aria-labelledby="svc-cabello-title">
+          <div class="svc-card__sheet-head">
+            <p class="svc-card__sheet-title" id="svc-cabello-title">Cabello</p>
+            <button class="svc-card__close" type="button" data-card-close>
+              <i class="ph-light ph-x" aria-hidden="true"></i>
+              <span class="sr-only">Cerrar</span>
+            </button>
+          </div>
+          <p class="svc-card__intro">Cortes, color y tratamientos para un cabello sano, brillante y con estilo.</p>
+          <ul class="svc-card__items">
+            <li><span class="svc-card__item-name">Corte de dama</span><span class="svc-card__item-note">Con lavado y peinado</span></li>
+            <li><span class="svc-card__item-name">Corte de caballero</span></li>
+            <li><span class="svc-card__item-name">Peinados</span><span class="svc-card__item-note">Lacio u ondulado</span></li>
+            <li><span class="svc-card__item-name">Coloración</span><span class="svc-card__item-note">Color, balayage y mechas</span></li>
+            <li><span class="svc-card__item-name">Tratamientos capilares</span><span class="svc-card__item-note">Hidratación, nutrición y reparación</span></li>
+            <li><span class="svc-card__item-name">Extensiones</span><span class="svc-card__item-note">Fibra colombiana o cabello 100% humano</span></li>
+          </ul>
+          <a class="btn btn--gold svc-card__cta" href="#contacto" data-wa="Hola, quiero agendar un servicio de cabello en MC Studio &amp; Spa.">
+            <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
+            <span>Agendar cita</span>
+          </a>
         </div>
+      </li>
+      <li class="svc-card" style="--d:1" data-svc-card>
+        <img class="svc-card__img" src="assets/img/servicio-unas.jpg" width="1120" height="1400" loading="lazy" decoding="async" draggable="false" alt="Manos con manicure en tono nude sobre una mesa de mármol">
+        <div class="svc-card__front">
+          <h3 class="svc-card__name">Uñas</h3>
+          <p class="svc-card__hint">Manicure, pedicure, gelish y acrílicas</p>
+          <button class="svc-card__open" type="button" aria-expanded="false" aria-controls="svc-unas" data-card-open>
+            <span>Ver servicios<span class="sr-only"> de uñas</span></span>
+            <i class="ph-light ph-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="svc-card__sheet" id="svc-unas" role="region" aria-labelledby="svc-unas-title">
+          <div class="svc-card__sheet-head">
+            <p class="svc-card__sheet-title" id="svc-unas-title">Uñas</p>
+            <button class="svc-card__close" type="button" data-card-close>
+              <i class="ph-light ph-x" aria-hidden="true"></i>
+              <span class="sr-only">Cerrar</span>
+            </button>
+          </div>
+          <p class="svc-card__intro">Manos y pies cuidados al detalle. Todos los servicios de uñas incluyen exfoliación de manos.</p>
+          <ul class="svc-card__items">
+            <li><span class="svc-card__item-name">Uñas acrílicas</span><span class="svc-card__item-note">Largo y diseño a tu gusto</span></li>
+            <li><span class="svc-card__item-name">Soft gel</span><span class="svc-card__item-note">Ligeras y naturales</span></li>
+            <li><span class="svc-card__item-name">Gelish</span><span class="svc-card__item-note">Color semipermanente</span></li>
+            <li><span class="svc-card__item-name">Manicure spa</span><span class="svc-card__item-note">Limpieza, cutícula e hidratación</span></li>
+            <li><span class="svc-card__item-name">Pedicure spa</span><span class="svc-card__item-note">Con exfoliación y masaje relajante</span></li>
+            <li><span class="svc-card__item-name">Pedicure con gelish</span></li>
+          </ul>
+          <a class="btn btn--gold svc-card__cta" href="#contacto" data-wa="Hola, quiero agendar un servicio de uñas en MC Studio &amp; Spa.">
+            <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
+            <span>Agendar cita</span>
+          </a>
+        </div>
+      </li>
+      <li class="svc-card" style="--d:2" data-svc-card>
+        <img class="svc-card__img" src="assets/img/servicio-pestanas.jpg" width="1120" height="1400" loading="lazy" decoding="async" draggable="false" alt="Primer plano de un ojo cerrado con pestañas largas y rizadas">
+        <div class="svc-card__front">
+          <h3 class="svc-card__name">Pestañas y cejas</h3>
+          <p class="svc-card__hint">Rizado de pestaña y planchado de ceja</p>
+          <button class="svc-card__open" type="button" aria-expanded="false" aria-controls="svc-pestanas" data-card-open>
+            <span>Ver servicios<span class="sr-only"> de pestañas y cejas</span></span>
+            <i class="ph-light ph-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="svc-card__sheet" id="svc-pestanas" role="region" aria-labelledby="svc-pestanas-title">
+          <div class="svc-card__sheet-head">
+            <p class="svc-card__sheet-title" id="svc-pestanas-title">Pestañas y cejas</p>
+            <button class="svc-card__close" type="button" data-card-close>
+              <i class="ph-light ph-x" aria-hidden="true"></i>
+              <span class="sr-only">Cerrar</span>
+            </button>
+          </div>
+          <p class="svc-card__intro">Servicios para realzar tu mirada de forma natural.</p>
+          <ul class="svc-card__items">
+            <li><span class="svc-card__item-name">Pestañas</span><span class="svc-card__item-note"><span class="ph">[Tipos de servicio por confirmar]</span></span></li>
+            <li><span class="svc-card__item-name">Rizado de pestaña</span></li>
+            <li><span class="svc-card__item-name">Cejas</span><span class="svc-card__item-note"><span class="ph">[Tipos de servicio por confirmar]</span></span></li>
+            <li><span class="svc-card__item-name">Planchado de ceja</span></li>
+          </ul>
+          <a class="btn btn--gold svc-card__cta" href="#contacto" data-wa="Hola, quiero agendar un servicio de pestañas o cejas en MC Studio &amp; Spa.">
+            <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
+            <span>Agendar cita</span>
+          </a>
+        </div>
+      </li>
+      <li class="svc-card" style="--d:3" data-svc-card>
+        <img class="svc-card__img" src="assets/img/servicio-spa.jpg" width="1120" height="1400" loading="lazy" decoding="async" draggable="false" alt="Manos de terapeuta con aceite junto a toallas y piedras calientes">
+        <div class="svc-card__front">
+          <h3 class="svc-card__name">Spa y masajes</h3>
+          <p class="svc-card__hint">Un momento para desconectarte</p>
+          <button class="svc-card__open" type="button" aria-expanded="false" aria-controls="svc-spa" data-card-open>
+            <span>Ver servicios<span class="sr-only"> de spa y masajes</span></span>
+            <i class="ph-light ph-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="svc-card__sheet" id="svc-spa" role="region" aria-labelledby="svc-spa-title">
+          <div class="svc-card__sheet-head">
+            <p class="svc-card__sheet-title" id="svc-spa-title">Spa y masajes</p>
+            <button class="svc-card__close" type="button" data-card-close>
+              <i class="ph-light ph-x" aria-hidden="true"></i>
+              <span class="sr-only">Cerrar</span>
+            </button>
+          </div>
+          <p class="svc-card__intro">Un momento para desconectarte y relajar el cuerpo.</p>
+          <ul class="svc-card__items">
+            <li><span class="svc-card__item-name">Masajes</span><span class="svc-card__item-note"><span class="ph">[Tipos de masaje por confirmar]</span></span></li>
+            <li><span class="svc-card__item-name">Spa</span><span class="svc-card__item-note"><span class="ph">[Servicios de spa por confirmar]</span></span></li>
+            <li><span class="svc-card__item-name">Pedicure spa</span><span class="svc-card__item-note">Con exfoliación y masaje relajante</span></li>
+          </ul>
+          <a class="btn btn--gold svc-card__cta" href="#contacto" data-wa="Hola, quiero agendar un masaje o servicio de spa en MC Studio &amp; Spa.">
+            <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
+            <span>Agendar cita</span>
+          </a>
+        </div>
+      </li>
+      <li class="svc-card" style="--d:4" data-svc-card>
+        <img class="svc-card__img" src="assets/img/servicio-faciales.jpg" width="1120" height="1400" loading="lazy" decoding="async" draggable="false" alt="Mujer con los ojos cerrados durante un tratamiento facial">
+        <div class="svc-card__front">
+          <h3 class="svc-card__name">Faciales y más</h3>
+          <p class="svc-card__hint">Hydrofacial y servicios personalizados</p>
+          <button class="svc-card__open" type="button" aria-expanded="false" aria-controls="svc-faciales" data-card-open>
+            <span>Ver servicios<span class="sr-only"> de faciales y más</span></span>
+            <i class="ph-light ph-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="svc-card__sheet" id="svc-faciales" role="region" aria-labelledby="svc-faciales-title">
+          <div class="svc-card__sheet-head">
+            <p class="svc-card__sheet-title" id="svc-faciales-title">Faciales y más</p>
+            <button class="svc-card__close" type="button" data-card-close>
+              <i class="ph-light ph-x" aria-hidden="true"></i>
+              <span class="sr-only">Cerrar</span>
+            </button>
+          </div>
+          <p class="svc-card__intro">Tratamientos para una piel más limpia, suave y luminosa, y servicios a tu medida.</p>
+          <ul class="svc-card__items">
+            <li><span class="svc-card__item-name">Hydrofacial</span><span class="svc-card__item-note">Limpieza profunda que renueva e hidrata</span></li>
+            <li><span class="svc-card__item-name">Tratamientos faciales</span><span class="svc-card__item-note"><span class="ph">[Opciones por confirmar]</span></span></li>
+            <li><span class="svc-card__item-name">Servicios personalizados</span><span class="svc-card__item-note">Cuéntanos qué buscas</span></li>
+          </ul>
+          <a class="btn btn--gold svc-card__cta" href="#contacto" data-wa="Hola, quiero información sobre faciales en MC Studio &amp; Spa.">
+            <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
+            <span>Agendar cita</span>
+          </a>
+        </div>
+      </li>
+    </ul>
+
+    <div class="container services__controls">
+      <div class="svc-progress" aria-hidden="true" data-svc-progress>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="svc-arrows">
+        <button class="svc-arrow" type="button" aria-controls="svc-track" data-svc-prev disabled>
+          <i class="ph-light ph-arrow-left" aria-hidden="true"></i>
+          <span class="sr-only">Anterior</span>
+        </button>
+        <button class="svc-arrow" type="button" aria-controls="svc-track" data-svc-next>
+          <i class="ph-light ph-arrow-right" aria-hidden="true"></i>
+          <span class="sr-only">Siguiente</span>
+        </button>
       </div>
     </div>
   </section>
