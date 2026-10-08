@@ -60,12 +60,13 @@
 <span class="top-sentinel" data-top-sentinel aria-hidden="true"></span>
 
 <header class="header" data-header>
-  <a class="announce" href="#agenda">
+  <!-- abre la ventana de la promoción -->
+  <button class="announce" type="button" aria-haspopup="dialog" data-promo-open>
     <span>Reapertura</span>
     <span class="announce__sep" aria-hidden="true"></span>
     <span>Corte de dama a $200<span class="announce__more"> por tiempo limitado</span></span>
     <i class="ph-light ph-arrow-right" aria-hidden="true"></i>
-  </a>
+  </button>
 
   <div class="nav">
     <div class="nav__inner container">
@@ -375,26 +376,27 @@
         </div>
       </div>
 
-      <ul class="values">
-        <li class="value" data-reveal style="--d:0">
-          <i class="ph-light ph-seal-check" aria-hidden="true"></i>
+      <!-- Valores tomados del flyer impreso del estudio -->
+      <ul class="values" data-reveal>
+        <li class="value" data-reveal style="--d:1">
+          <span class="value__icon" aria-hidden="true"><i class="ph-light ph-seal-check"></i></span>
           <h3>Personal profesional</h3>
           <p>Un equipo dedicado a cada servicio que ofrecemos.</p>
         </li>
-        <li class="value" data-reveal style="--d:1">
-          <i class="ph-light ph-heart" aria-hidden="true"></i>
+        <li class="value" data-reveal style="--d:2">
+          <span class="value__icon" aria-hidden="true"><i class="ph-light ph-heart"></i></span>
           <h3>Atención personalizada</h3>
           <p>Te asesoramos para encontrar el look que va contigo.</p>
         </li>
-        <li class="value" data-reveal style="--d:2">
-          <i class="ph-light ph-drop" aria-hidden="true"></i>
-          <h3>Productos de alta calidad</h3>
-          <p>Trabajamos con productos profesionales.</p>
-        </li>
         <li class="value" data-reveal style="--d:3">
-          <i class="ph-light ph-shield-check" aria-hidden="true"></i>
-          <h3>Higiene y desinfección</h3>
-          <p>Cuidamos la limpieza en cada servicio.</p>
+          <span class="value__icon" aria-hidden="true"><i class="ph-light ph-diamond"></i></span>
+          <h3>Experiencia de belleza</h3>
+          <p>Cada cita pensada para que salgas sintiéndote increíble.</p>
+        </li>
+        <li class="value" data-reveal style="--d:4">
+          <span class="value__icon" aria-hidden="true"><i class="ph-light ph-flower-lotus"></i></span>
+          <h3>Un espacio para ti</h3>
+          <p>Un estudio renovado para que te relajes y disfrutes.</p>
         </li>
       </ul>
     </div>
@@ -436,31 +438,6 @@
           <img src="assets/img/galeria-pedicure.jpg" width="1400" height="1400" loading="lazy"
                alt="Tina de pedicure con pétalos blancos y toallas">
         </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- REAPERTURA -->
-  <section class="cta" id="agenda">
-    <div class="cta__bg" aria-hidden="true">
-      <img src="assets/img/cta-spa.jpg" width="2000" height="1125" loading="lazy" alt="">
-    </div>
-    <div class="container cta__grid">
-      <div class="cta__copy" data-reveal>
-        <p class="eyebrow">Reapertura</p>
-        <h2 class="display-1 cta__title">Date un tiempo <em class="gold-text">para ti</em>.</h2>
-        <p class="cta__text">Volvimos con regalos sorpresa, promociones especiales y nuevos servicios.</p>
-      </div>
-
-      <div class="ticket" data-reveal style="--d:2">
-        <p class="ticket__kicker">Por tiempo limitado</p>
-        <h3 class="ticket__title">Corte de dama</h3>
-        <p class="ticket__desc">Shampoo, corte y brushing</p>
-        <p class="ticket__price"><span class="sr-only">Precio: </span>$200</p>
-        <a class="btn btn--gold" href="#contacto" data-wa="Hola, quiero agendar el corte de dama de reapertura en MC Studio &amp; Spa.">
-          <i class="ph-light ph-whatsapp-logo" aria-hidden="true"></i>
-          <span>Agendar cita</span>
-        </a>
       </div>
     </div>
   </section>

@@ -50,40 +50,50 @@
     if (event.matches && toggle?.getAttribute('aria-expanded') === 'true') setMenu(false);
   });
 
-  // Ventana emergente de reapertura
-  // TODO: fecha en que termina la promoción (AAAA-MM-DD). Después de esa fecha deja de mostrarse.
+  // Ventana emergente de reapertura: aparece cada vez que se abre la página
+  // TODO: fecha en que termina la promoción (AAAA-MM-DD). Desde el día siguiente ya no salen ni la ventana ni la barra superior.
   const PROMO_UNTIL = '';
-  const PROMO_KEY = 'mc-promo-reapertura-cerrada';
-  const PROMO_SNOOZE_MS = 24 * 60 * 60 * 1000;
   const promo = document.querySelector('[data-promo]');
+  const promoOpeners = document.querySelectorAll('[data-promo-open]');
+  const expired = PROMO_UNTIL !== '' && Date.now() > new Date(`${PROMO_UNTIL}T23:59:59`).getTime();
 
-  if (promo && typeof promo.showModal === 'function') {
+  if (expired) {
+    promoOpeners.forEach((el) => el.remove());
+    document.documentElement.style.setProperty('--announce-h', '0px');
+  } else if (promo && typeof promo.showModal === 'function') {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const expired = PROMO_UNTIL !== '' && Date.now() > new Date(`${PROMO_UNTIL}T23:59:59`).getTime();
-    const forced = new URLSearchParams(window.location.search).has('promo');
+    const card = promo.querySelector('.promo__card');
+    let closeTimer = 0;
 
-    let snoozed = false;
-    try {
-      const closedAt = Number(localStorage.getItem(PROMO_KEY));
-      snoozed = closedAt > 0 && Date.now() - closedAt < PROMO_SNOOZE_MS;
-    } catch (error) { /* almacenamiento bloqueado: se muestra normalmente */ }
+    const openPromo = () => {
+      if (promo.classList.contains('is-closing')) finishClose();
+      if (promo.open) return;
+      if (toggle?.getAttribute('aria-expanded') === 'true') setMenu(false);
+      promo.showModal();
+      document.body.classList.add('is-locked');
+    };
 
-    const finishClose = () => {
+    // solo la animación de salida de la tarjeta termina el cierre
+    const onCloseEnd = (event) => { if (event.target === card && event.animationName === 'promo-out') finishClose(); };
+
+    function finishClose() {
+      // limpia lo pendiente para que un cierre viejo no cierre la ventana al reabrirla
+      card.removeEventListener('animationend', onCloseEnd);
+      window.clearTimeout(closeTimer);
       promo.classList.remove('is-closing');
       document.body.classList.remove('is-locked');
       if (promo.open) promo.close();
-    };
+    }
 
     const closePromo = ({ animate = true } = {}) => {
       if (!promo.open || promo.classList.contains('is-closing')) return;
-      try { localStorage.setItem(PROMO_KEY, String(Date.now())); } catch (error) { /* sin almacenamiento */ }
       if (!animate || reduceMotion.matches) {
         finishClose();
         return;
       }
       promo.classList.add('is-closing');
-      promo.querySelector('.promo__card').addEventListener('animationend', finishClose, { once: true });
-      window.setTimeout(finishClose, 400); // por si la animación no llega a terminar
+      card.addEventListener('animationend', onCloseEnd);
+      closeTimer = window.setTimeout(finishClose, 400); // por si la animación no llega a terminar
     };
 
     promo.querySelectorAll('[data-promo-close]').forEach((button) => button.addEventListener('click', () => closePromo()));
@@ -95,13 +105,13 @@
     promo.addEventListener('cancel', (event) => { event.preventDefault(); closePromo(); });
     promo.addEventListener('close', () => document.body.classList.remove('is-locked'));
 
-    if (forced || (!snoozed && !expired)) {
-      window.setTimeout(() => {
-        if (document.body.classList.contains('is-locked')) return; // el menú móvil está abierto
-        promo.showModal();
-        document.body.classList.add('is-locked');
-      }, 1300);
-    }
+    // la barra superior vuelve a abrirla
+    promoOpeners.forEach((el) => el.addEventListener('click', openPromo));
+
+    window.setTimeout(() => {
+      if (document.body.classList.contains('is-locked')) return; // el menú móvil está abierto
+      openPromo();
+    }, 1300);
   }
 
   // Servicios: tarjetas deslizables

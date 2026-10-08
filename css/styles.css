@@ -1,7 +1,7 @@
 /* MC Studio & Spa
    Dirección: negro editorial con dorado champagne (los colores del logo de la marca).
    Un solo bloque claro (Nosotros) como cambio de color deliberado.
-   Esquinas: botones en píldora; tarjetas (servicios y promoción) con radio de 28px (24px en móvil);
+   Esquinas: botones en píldora; tarjetas y paneles (servicios, valores y promoción) con radio de 28px (24px en móvil);
    fotos sueltas, galería y mapa con esquinas rectas.
    Capas (z-index): menú móvil 40, botón flotante 45, encabezado 50, grano 70, salto 80. */
 
@@ -36,7 +36,7 @@
   --gutter: clamp(20px, 5vw, 64px);
   --announce-h: 40px;
   --nav-h: 76px;
-  --radius-card: 28px;       /* tarjetas: servicios, ventana emergente y sección de reapertura */
+  --radius-card: 28px;       /* tarjetas y paneles: servicios, valores y ventana de la promoción */
   --section-y: clamp(96px, 12vw, 176px);
 }
 
@@ -227,6 +227,7 @@ em { font-style: italic; color: var(--accent); }
 .header.is-scrolled:not(.is-open) { transform: translateY(calc(-1 * var(--announce-h))); }
 
 .announce {
+  width: 100%;
   height: var(--announce-h);
   display: flex;
   align-items: center;
@@ -249,6 +250,7 @@ em { font-style: italic; color: var(--accent); }
 .announce__sep { width: 20px; height: 1px; background: var(--accent); opacity: .6; }
 .announce i { font-size: 15px; color: var(--accent); transition: transform .4s var(--ease); }
 .announce:hover i { transform: translateX(4px); }
+.announce:focus-visible { outline-offset: -6px; }
 
 .nav {
   height: var(--nav-h);
@@ -686,17 +688,67 @@ html:not(.js) .services__controls { display: none; }
 }
 .about__detail img { width: 100%; height: 100%; object-fit: cover; }
 
+/* Valores: panel oscuro con los colores del logo dentro del bloque claro */
 .values {
   margin-top: clamp(72px, 8vw, 120px);
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid var(--line-light);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: clamp(8px, 1.4vw, 20px);
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(110% 120% at 0% 0%, rgba(216, 180, 138, .13) 0%, rgba(216, 180, 138, 0) 52%),
+    radial-gradient(80% 90% at 100% 100%, rgba(216, 180, 138, .07) 0%, rgba(216, 180, 138, 0) 60%),
+    var(--noir);
+  box-shadow: 0 48px 90px -56px rgba(27, 22, 24, .6);
 }
-.value { padding: 36px 28px 0; border-left: 1px solid var(--line-light); }
-.value:first-child { padding-left: 0; border-left: 0; }
-.value i { font-size: 34px; color: var(--accent-deep); }
-.value h3 { margin-top: 18px; font-family: var(--font-display); font-size: 25px; line-height: 1.15; letter-spacing: -.01em; }
-.value p { margin-top: 8px; font-size: 15px; color: var(--on-light-muted); }
+.value {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  gap: 10px 28px;
+  padding: clamp(32px, 3.8vw, 56px);
+}
+/* cruz de líneas finas entre los cuatro valores */
+.value:nth-child(odd) { border-right: 1px solid var(--line-dark); }
+.value:nth-child(-n+2) { border-bottom: 1px solid var(--line-dark); }
+
+.value__icon {
+  grid-row: span 2;
+  width: 72px; height: 72px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: linear-gradient(var(--noir-2), var(--noir-2)) padding-box, var(--gold) border-box; /* aro dorado metálico */
+  color: var(--accent);
+  font-size: 30px;
+  transition: color .5s var(--ease), transform .6s var(--ease);
+}
+.about .value h3 {
+  align-self: end;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.3vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -.015em;
+  padding-bottom: .04em;
+  color: var(--on-dark);
+}
+.value p { max-width: 34ch; font-size: 16px; line-height: 1.6; color: var(--on-dark-soft); }
+.about .values ::selection { background: var(--accent); color: var(--noir); }
+
+/* al pasar el cursor, el medallón se llena de oro */
+@media (hover: hover) and (pointer: fine) {
+  .value__icon { position: relative; isolation: isolate; }
+  .value__icon::before {
+    content: "";
+    position: absolute; inset: 0; z-index: -1;
+    border-radius: inherit;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity .5s var(--ease);
+  }
+  .value:hover .value__icon { color: var(--on-gold); transform: translateY(-3px); }
+  .value:hover .value__icon::before { opacity: 1; }
+}
 
 /* Galería */
 
@@ -731,74 +783,6 @@ html:not(.js) .services__controls { display: none; }
 .g3 { grid-column: 9 / 13; }
 .g4 { grid-column: 6 / 10; }
 .g5 { grid-column: 10 / 13; }
-
-/* Reapertura */
-
-.cta {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding-block: clamp(120px, 14vw, 208px);
-  background: var(--noir);
-}
-.cta__bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
-.cta__bg img {
-  position: absolute;
-  left: 0; top: -8%;
-  width: 100%; height: 116%;
-  object-fit: cover;
-  object-position: 75% 50%;
-}
-.cta__bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(15, 12, 13, .95) 0%, rgba(15, 12, 13, .8) 45%, rgba(15, 12, 13, .38) 100%);
-}
-
-.cta__grid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 48px 24px;
-  align-items: center;
-}
-.cta__copy { grid-column: 1 / span 7; }
-.cta__title { margin-top: 22px; }
-.cta__text { margin-top: 24px; max-width: 40ch; font-size: clamp(17px, 1.4vw, 20px); }
-
-.ticket {
-  grid-column: 9 / -1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 44px 40px 40px;
-  background: rgba(15, 12, 13, .84);
-  border: 1px solid rgba(216, 180, 138, .42);
-  border-radius: var(--radius-card);
-}
-.ticket__kicker {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.ticket__title {
-  margin-top: 18px;
-  font-family: var(--font-display);
-  font-size: clamp(32px, 2.8vw, 42px);
-  line-height: 1.05;
-}
-.ticket__desc { margin-top: 6px; font-size: 15px; color: var(--on-dark-muted); }
-.ticket__price {
-  margin-top: 22px;
-  font-family: var(--font-display);
-  font-size: clamp(80px, 8vw, 124px);
-  line-height: .9;
-  letter-spacing: -.035em;
-  color: var(--on-dark);
-}
-.ticket .btn { margin-top: 36px; align-self: stretch; }
 
 /* Contacto */
 
@@ -1108,8 +1092,7 @@ html:not(.js) .services__controls { display: none; }
   .promo.is-closing::backdrop { animation: fade-out .22s ease-in both; }
 
   @supports (animation-timeline: view()) {
-    .about__detail img,
-    .cta__bg img {
+    .about__detail img {
       animation: drift linear both;
       animation-timeline: view();
       animation-range: cover;
@@ -1167,11 +1150,9 @@ html:not(.js) .services__controls { display: none; }
   .about__collage { padding-bottom: 24%; }
   .about__detail { left: auto; right: 0; width: 42%; }
 
-  .values { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; border-top: 0; }
-  .value, .value:first-child { padding: 28px 0; border-left: 0; border-top: 1px solid var(--line-light); }
+  .value { gap: 10px 22px; }
+  .value__icon { width: 56px; height: 56px; font-size: 24px; }
 
-  .cta__copy, .ticket { grid-column: 1 / -1; }
-  .cta__bg::after { background: linear-gradient(180deg, rgba(15, 12, 13, .75) 0%, rgba(15, 12, 13, .92) 60%); }
 
   .contact__grid { grid-template-columns: minmax(0, 1fr); }
   .contact__info, .contact__map { grid-column: 1; }
@@ -1197,8 +1178,14 @@ html:not(.js) .services__controls { display: none; }
   .js .svc-card__sheet { inset: 8px; gap: 14px; padding: 18px 18px 16px; border-radius: calc(var(--radius-card) - 8px); }
   .svc-card__items { gap: 9px; }
   .values { grid-template-columns: minmax(0, 1fr); }
+  .value { padding: 28px 18px; gap: 6px 18px; }
+  .value:nth-child(odd) { border-right: 0; }
+  .value:nth-child(-n+2) { border-bottom: 0; }
+  .value:not(:last-child) { border-bottom: 1px solid var(--line-dark); }
+  .value__icon { width: 52px; height: 52px; }
+  .about .value h3 { font-size: 24px; }
+  .value p { font-size: 15px; }
   .menu__links a { font-size: 40px; }
-  .ticket { padding: 32px 24px 28px; }
   .contact__actions .btn { width: 100%; }
   .announce { gap: 10px; font-size: 12px; }
   :root { --radius-card: 24px; }
