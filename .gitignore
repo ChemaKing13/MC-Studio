@@ -1,0 +1,9 @@
+# Documentos internos del proyecto, no se publican
+docs/
+
+# Archivos locales
+.DS_Store
+
+# Node (si lo usas)
+node_modules/
+.env
